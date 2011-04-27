@@ -5,11 +5,10 @@ function State:initialize()
 	self.controllers = {}
 end
 
-function State:recieveInput(inputTable)
--- TODO: STUB SON!
--- Instead of the event based input love uses
--- this will collect all of that into a table
--- and pass it to controllers to loop through.
+function State:input(inputTable)
+	for k,v in pairs(self.controllers) do
+		v:onInput(inputTable)
+	end
 end
 
 function State:addActor(actor)
@@ -23,18 +22,17 @@ function State:addActor(actor)
 end
 
 function State:removeActor(actor)
-	actor:kill()
 	self.actors[actor.id] = nil;
 	self.actors[actor.cid] = nil;
 end
 
-function State:Update()
+function State:update()
 	for k,v in pairs(self.actors) do
 		v:onUpdate()
 	end
 end
 
-function State:Draw()
+function State:draw()
 	for k,v in pairs(self.actors) do
 		v:onDraw()
 	end

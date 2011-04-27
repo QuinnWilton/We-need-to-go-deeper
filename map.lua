@@ -1,5 +1,3 @@
-require("lib/essential")
-
 Tile = class("Tile")
 
 function Tile:initialize(obstructsMovement, obstructsSight)

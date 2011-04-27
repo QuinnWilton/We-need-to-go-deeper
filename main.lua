@@ -1,17 +1,29 @@
-require "map"
+require "lib/essential"
 require "state"
+require "stack"
+require "mapcontroller"
 
 function love.load (args)
+	curInput = {}
 	title = love.graphics.getCaption()
-	map = Map:new(80, 50)
+	mainStack = Stack:new()
+	mainState = State:new()
+	mainController = MapController:new()
+	
+	mainState:addActor(mainController)
+	mainStack:push(mainState)
 end
 
 function love.update (dt)
+	curState = mainStack:peek()
+	curState:input(curInput)
+	curState:update()
+	curInput = {}
 end
 
 function love.draw ()
 	love.graphics.setCaption(title .. " (fps " .. love.timer.getFPS() .. ")")
-	map:draw()
+	curState:draw()
 end
 
 function love.mousepressed (x, y, button)
@@ -21,7 +33,7 @@ function love.mousereleased (x, y, button)
 end
 
 function love.keypressed (key, unicode)
-	map:generateCellularAutomata(0.4, math.floor(math.random(1, 5)))
+	table.Insert(curInput, {t = "keypress", v = key})
 end
 
 function love.keyreleased (key)
