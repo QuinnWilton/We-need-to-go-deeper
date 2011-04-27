@@ -1,10 +1,10 @@
 require "gui"
 
-Panel = class("Panel", "GUIElement")
+Panel = class("Panel", GUIElement)
 
 --INIT/SETTINGS
 
-function GUIElement:initialize(x, y, width, height)
+function Panel:initialize(x, y, width, height)
 	GUIElement.initialize(self, x, y, width, height)
 	self.canGainFocus = true
 	self.canLoseFocus = true
@@ -12,47 +12,55 @@ end
 
 --EVENTS
 
-function GUIElement:onDraw()
+function Panel:onDraw()
 	love.graphics.setColor(100, 150, 200)
 	love.graphics.rectangle("fill", self.pos.x, self.pos.y, self.size.w, self.size.h)
 end
 
-function GUIElement:onUpdate()
+function Panel:onUpdate()
 
 end
 
-function GUIElement:onGainedFocus()
+function Panel:onGainedFocus()
 
 end
 
-function GUIElement:onLostFocus()
+function Panel:onLostFocus()
 
 end
 
-function GUIElement:onPress(button)
+function Panel:onPress(button)
 	self.size.w = self.size.w+1
 end
 
-function GUIElement:onRelease(button)
+function Panel:onRelease(button)
 
 end
 
-function GUIElement:onMouseOver()
+function Panel:onMouseOver()
 
 end
 
-function GUIElement:onMouseOut()
+function Panel:onMouseOut()
 
 end
 
-function GUIElement:onKeyPressed(key, unicode)
+function Panel:onKeyPressed(key, unicode)
 
 end
 
-function GUIElement:onKeyReleased(key, unicode)
+function Panel:onKeyReleased(key, unicode)
 
 end
 
-function GUIElement:onRemove()
+function Panel:onRemove()
 
 end
+
+function GUI.factoryFuncs.Panel(x, y, width, height)
+	return Panel:new(x, y, width, height)
+end
+
+GUI.registerGUI("Panel", GUI.factoryFuncs.Panel)
+
+
