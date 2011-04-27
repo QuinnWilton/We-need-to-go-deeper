@@ -33,7 +33,7 @@ function love.mousereleased (x, y, button)
 end
 
 function love.keypressed (key, unicode)
-	table.Insert(curInput, {t = "keypress", v = key})
+	table.insert(curInput, {t = "keypress", v = key})
 end
 
 function love.keyreleased (key)

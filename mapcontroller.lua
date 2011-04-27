@@ -9,7 +9,7 @@ end
 
 function MapController:onInput(inputTable) -- Called before update!
 	for k,v in pairs(inputTable) do
-		if v.type == "keypress" then
+		if v.t == "keypress" then
 			self.map:generateCellularAutomata(0.4, math.floor(math.random(1, 5)))
 		end
 	end
