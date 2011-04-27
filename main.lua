@@ -3,6 +3,10 @@ require "state"
 require "stack"
 require "mapcontroller"
 
+function curState()
+	return mainStack:peek();
+end
+
 function love.load (args)
 	curInput = {}
 	title = love.graphics.getCaption()
@@ -15,15 +19,14 @@ function love.load (args)
 end
 
 function love.update (dt)
-	curState = mainStack:peek()
-	curState:input(curInput)
-	curState:update()
+	curState():input(curInput)
+	curState():update(dt)
 	curInput = {}
 end
 
 function love.draw ()
 	love.graphics.setCaption(title .. " (fps " .. love.timer.getFPS() .. ")")
-	curState:draw()
+	curState():draw()
 end
 
 function love.mousepressed (x, y, button)
@@ -37,4 +40,5 @@ function love.keypressed (key, unicode)
 end
 
 function love.keyreleased (key)
+	table.insert(curInput, {t = "keypress", v = key})
 end

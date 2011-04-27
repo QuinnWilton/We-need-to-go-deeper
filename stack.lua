@@ -24,3 +24,8 @@ end
 function Stack:peek()
 	return self.Raw[self.n]
 end
+
+function Stack:replace(o)
+	if self.n ~= 0 then self:pop() end
+	self:push(o)
+end

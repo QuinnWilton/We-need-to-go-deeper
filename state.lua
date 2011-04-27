@@ -22,11 +22,12 @@ function State:addActor(actor)
 end
 
 function State:removeActor(actor)
+	self.actors[actor.id].id, self.actors[actor.id].cid = 0
 	self.actors[actor.id] = nil;
 	self.actors[actor.cid] = nil;
 end
 
-function State:update()
+function State:update(dt)
 	for k,v in pairs(self.actors) do
 		v:onUpdate()
 	end
