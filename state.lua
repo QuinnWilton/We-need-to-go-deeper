@@ -29,7 +29,7 @@ end
 
 function State:update(dt)
 	for k,v in pairs(self.actors) do
-		v:onUpdate()
+		v:onUpdate(dt)
 	end
 end
 

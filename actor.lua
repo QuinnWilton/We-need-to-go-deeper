@@ -6,7 +6,7 @@ function Actor:initialize()
 	-- part of a state.
 end
 
-function Actor:onUpdate()
+function Actor:onUpdate(dt)
 	-- We do nothing, just a prototype,
 end
 
