@@ -1,6 +1,5 @@
-require("map")
-
-local map
+require "map"
+require "state"
 
 function love.load (args)
 	title = love.graphics.getCaption()
