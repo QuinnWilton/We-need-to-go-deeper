@@ -2,7 +2,7 @@ require "lib/essential"
 require "input"
 require "state"
 require "stack"
-require "mapcontroller"
+require "actors/mapcontroller"
 
 function curState()
 	return mainStack:peek();
