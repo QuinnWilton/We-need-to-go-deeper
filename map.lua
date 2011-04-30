@@ -13,7 +13,6 @@ Map = class("Map")
 function Map:initialize(width, height)
 	self.width = width
 	self.height = height
-	self.tileSize = {love.graphics.getWidth() / self.width, love.graphics.getHeight() / self.height}
 	self.tileMap = {}
 	self:generateCellularAutomata(0.45, 5)
 end
@@ -76,14 +75,20 @@ function Map:countNeighbouringWalls(x, y)
 	return sum
 end
 
-function Map:draw()
+function Map:draw(offset, tilenum)
+	offset = offset or 0
+	if not tilenum then
+		tileSize = Vector2d:new(love.graphics.getWidth()/self.width, love.graphics.getHeight()/self.height)
+	else
+		tileSize = Vector2d:new(love.graphics.getWidth()/tilenum.x, love.graphics.getHeight()/tilenum.y)
+	end
 	for x = 1, self.width do
 		for y = 1,self.height do
 			love.graphics.setColor(0, 0, 255)
 			if self.tileMap[x][y].obstructsSight then
 				love.graphics.setColor(0, 0, 100)
 			end
-			love.graphics.rectangle("fill", (x-1)*self.tileSize[1], (y-1)*self.tileSize[2], self.tileSize[1], self.tileSize[2])
+			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+offset.x, ((y-1)*tileSize.y)+offset.y, tileSize.x+offset.x, tileSize.y+offset.y)
 		end
 	end
 end
