@@ -76,7 +76,7 @@ function Map:countNeighbouringWalls(x, y)
 end
 
 function Map:draw(offset, tilenum)
-	offset = offset or 0
+	offset = offset or Vector2d:new(0,0)
 	if not tilenum then
 		tileSize = Vector2d:new(love.graphics.getWidth()/self.width, love.graphics.getHeight()/self.height)
 	else
@@ -88,7 +88,7 @@ function Map:draw(offset, tilenum)
 			if self.tileMap[x][y].obstructsSight then
 				love.graphics.setColor(0, 0, 100)
 			end
-			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+offset.x, ((y-1)*tileSize.y)+offset.y, tileSize.x+offset.x, tileSize.y+offset.y)
+			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+(tileSize.x*offset.x), ((y-1)*tileSize.y)+(tileSize.y*offset.y), tileSize.x+(tileSize.x*offset.x), tileSize.y+(tileSize.y*offset.y))
 		end
 	end
 end
