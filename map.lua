@@ -88,7 +88,7 @@ function Map:draw(offset, tilenum)
 			if self.tileMap[x][y].obstructsSight then
 				love.graphics.setColor(0, 0, 100)
 			end
-			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+(tileSize.x*offset.x), ((y-1)*tileSize.y)+(tileSize.y*offset.y), tileSize.x+(tileSize.x*offset.x), tileSize.y+(tileSize.y*offset.y))
+			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+(tileSize.x*offset.x), ((y-1)*tileSize.y)+(tileSize.y*offset.y), tileSize.x, tileSize.y)--+(tileSize.x*offset.x)--+(tileSize.y*offset.y)
 		end
 	end
 end
