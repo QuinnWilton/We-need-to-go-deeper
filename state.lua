@@ -22,6 +22,7 @@ function State:addActor(actor)
 end
 
 function State:removeActor(actor)
+	actor:onRemove()
 	self.actors[actor.id].id, self.actors[actor.id].cid = 0
 	self.actors[actor.id] = nil;
 	self.actors[actor.cid] = nil;

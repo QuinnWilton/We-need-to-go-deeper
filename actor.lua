@@ -13,3 +13,7 @@ end
 function Actor:onDraw()
 	-- Same here.
 end
+
+function Actor:onRemove()
+	--prototype
+end

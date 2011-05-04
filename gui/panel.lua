@@ -30,7 +30,7 @@ function Panel:onLostFocus()
 end
 
 function Panel:onPress(button)
-	self.size.w = self.size.w+1
+	--self.size.w = self.size.w+1
 end
 
 function Panel:onRelease(button)

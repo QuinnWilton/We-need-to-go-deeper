@@ -19,7 +19,7 @@ function MapController:onInput(inputTable) -- Called before update!
 end
 
 function MapController:onUpdate(dt)
-	if self.shouldMove then
+	if self.shouldMove then --this method is full of terrible
 		m = self.shouldMove -- just a shortcut
 		if m == "w" then self.curPos.y = self.curPos.y + 1 end
 		if m == "s" then self.curPos.y = self.curPos.y - 1 end

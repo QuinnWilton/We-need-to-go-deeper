@@ -23,6 +23,12 @@ function MapState:draw(dt)
 	State.draw(self)
 end
 
+function MapState:regenerate() --for testing
+	self.map = Map:new(50,50)
+	self.center = Vector2d:new(0,0)
+	print("Map randomized.")
+end
+
 function MapState:setOffset(vec)
 	self.center = vec
 end

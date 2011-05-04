@@ -13,6 +13,7 @@ function GUIElement:initialize(x, y, width, height)
 	self.hasParent = false
 	self.canGainFocus = true
 	self.canLoseFocus = true
+	self.consumesMouseEvents = false
 	self:setPos(x, y)
 	self:setSize(width, height)
 end
@@ -188,13 +189,33 @@ function GUIManager:handleMousePressed (x, y, button)
 	end
 	
 	for k,e in pairs(self.elements) do
+		if(not e.hasParent) then
+			self:sendMousePressed(e, x, y, button)
+		end
+		--if(e:overlapsPoint(x, y)) then
+		--	e:onPress(button)
+		--	if(self.focusElement == nil) then
+		--		e:giveFocus()
+		--	end
+		--	return
+		--end*/
+	end
+end
+
+function GUIManager:sendMousePressed(e, x, y, button)
+	if(#e.childElements < 1 or e.consumesMouseEvents) then
 		if(e:overlapsPoint(x, y)) then
 			e:onPress(button)
 			if(self.focusElement == nil) then
 				e:giveFocus()
 			end
-			return
+			return true
 		end
+	else
+		for k,e2 in pairs(e.childElements) do
+			if(self:sendMousePressed(e2, x, y, button)) then return true end
+		end	
+		return false
 	end
 end
 
@@ -214,7 +235,7 @@ function GUIManager:handleMouseReleased (x, y, button)
 	end
 end
 
-function GUIManager:handleKeyPressed (key, unicode)
+function GUIManager:handleKeyPressed (key)--, unicode)
 	for k,e in pairs(self.elements) do
 		e:onKeyPressed(key, unicode)
 	end
@@ -245,13 +266,17 @@ function GUIManager:removeElement(e)
 end
 
 GUI = {}
-GUI.activeInstance = GUIManager:new()--nil
 GUI.factory = {}
 GUI.factoryFuncs = {}
 
 --function GUI.initialize()
 --	GUI.activeInstance = GUIManager:new()
 --end
+
+function GUI.initialize()
+	GUI.activeInstance = GUIManager:new()--nil
+	return GUI.activeInstance.elements
+end
 
 function GUI.addElement(class, parent, x,y, width, height)
 	--TODO: make this work
@@ -282,11 +307,20 @@ function GUI.handleMouseReleased(x, y, button)
 	GUI.activeInstance:handleMouseReleased(x, y, button)
 end
 
-function GUI.handleKeyPressed(key, unicode)
-	GUI.activeInstance:handleKeyPressed (key, unicode)
+function GUI.handleKeyPressed(key)--, unicode)
+	GUI.activeInstance:handleKeyPressed(key)--, unicode)
 end
 
 function GUI.handleKeyReleased(key)
 	GUI.activeInstance:handleKeyReleased(key)
+end
+
+function GUI.swapElements(e)
+	if(e ~= nil) then
+		GUI.activeInstance.elements = e
+	else
+		GUI.activeInstance.elements = nil
+		GUI.activeInstance.elements = {}
+	end
 end
 
