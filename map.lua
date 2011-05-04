@@ -82,13 +82,26 @@ function Map:draw(offset, tilenum)
 	else
 		tileSize = Vector2d:new(love.graphics.getWidth()/tilenum.x, love.graphics.getHeight()/tilenum.y)
 	end
+	local offX = tileSize.x*offset.x
+	local offX2 = love.graphics.getWidth()--offX+love.graphics.getWidth()
+	local offY = tileSize.y*offset.y
+	local offY2 = love.graphics.getHeight()--offY+love.graphics.getHeight()
 	for x = 1, self.width do
+		local x2 = (x-1)*tileSize.x+offX
 		for y = 1,self.height do
-			love.graphics.setColor(0, 0, 255)
-			if self.tileMap[x][y].obstructsSight then
-				love.graphics.setColor(0, 0, 100)
+			local y2 = (y-1)*tileSize.y+offY
+			
+			if(x2 < offX2  and y2 < offY2  and x2+tileSize.x > 0 and y2+tileSize.y > 0) then
+				if(x-5 == offset.x*-1 and y-4 == offset.y*-1) then --cursor
+					love.graphics.setColor(0, 0, 150)
+				else
+					love.graphics.setColor(0, 0, 255)
+					if self.tileMap[x][y].obstructsSight then
+						love.graphics.setColor(0, 0, 100)
+					end--+offX--+offY
+				end
+				love.graphics.rectangle("fill", x2, y2, tileSize.x, tileSize.y)--+(tileSize.x*offset.x)--+(tileSize.y*offset.y)
 			end
-			love.graphics.rectangle("fill", ((x-1)*tileSize.x)+(tileSize.x*offset.x), ((y-1)*tileSize.y)+(tileSize.y*offset.y), tileSize.x, tileSize.y)--+(tileSize.x*offset.x)--+(tileSize.y*offset.y)
 		end
 	end
 end
